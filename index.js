@@ -1,14 +1,16 @@
 var leapjs = require('leapjs');
 var io = require('socket.io-client');
-const ip = '******';
-const port = '******';
+const ip = '*****';
+const port = '*****';
 var socket = io.connect(ip + ':' + port, {
   reconnect: true
 });
 // add a connect listener
 socket.on('connect', function(socket) {
   console.log('Connected successfully to smartmirror');
+
 });
+
 // intialize leap motion controller
 var leap = new leapjs.Controller({
   enableGestures: true
@@ -22,9 +24,10 @@ leap.on('deviceFrame', function(frame) {
     var gesture = frame.gestures[i];
     switch (gesture.type) {
       case 'circle':
+        // gesture for play module
         if (gesture.state == 'stop') {
-          socket.emit('smartmirror', 'recording-tap');
-        }
+/*          socket.emit('smartmirror', 'recording-tap');
+*/        }
         break;
       case 'swipe':
         //Classify swipe as either horizontal or vertical
@@ -34,29 +37,31 @@ leap.on('deviceFrame', function(frame) {
           if (gesture.direction[0] > 0) {
             if (gesture.state == 'stop') {
               swipeDirection = "right";
+              console.log("swipe right");
               // send start recording command to smart mirror
-              socket.emit('smartmirror', 'swipe' + swipeDirection);
+              socket.emit('smartmirror', 'swipe ' + swipeDirection);
             }
           } else {
             if (gesture.state == 'stop') {
               swipeDirection = "left";
               // send start recording command to smart mirror
-              socket.emit('smartmirror', 'swipe' + swipeDirection);
-            }
+/*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
+*/            }
           }
         } else {
           //vertical
           if (gesture.direction[1] > 0) {
+            // gesture for recording
             if (gesture.state == 'stop') {
               swipeDirection = "up";
-              socket.emit('smartmirror', 'swipe' + swipeDirection);
+              socket.emit('smartmirror', 'record');
             }
           } else {
             if (gesture.state == 'stop') {
               swipeDirection = "down";
               // send start recording command to smart mirror
-              socket.emit('smartmirror', 'swipe' + swipeDirection);
-            }
+/*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
+*/            }
           }
         }
         break;
