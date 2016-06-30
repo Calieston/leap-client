@@ -1,0 +1,11 @@
+{
+  "name": "leap",
+  "version": "0.0.1",
+  "description": "Smart Mirror leap client",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "leapjs": "^0.6.4",
+    "socket.io": "^1.4.8"
+  }
+}
