@@ -26,8 +26,8 @@ leap.on('deviceFrame', function(frame) {
       case 'circle':
         // gesture for play module
         if (gesture.state == 'stop') {
-/*          socket.emit('smartmirror', 'recording-tap');
-*/        }
+          socket.emit('smartmirror', 'tagesschau');
+        }
         break;
       case 'swipe':
         //Classify swipe as either horizontal or vertical
@@ -45,8 +45,9 @@ leap.on('deviceFrame', function(frame) {
             if (gesture.state == 'stop') {
               swipeDirection = "left";
               // send start recording command to smart mirror
-/*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
-*/            }
+              /*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
+               */
+            }
           }
         } else {
           //vertical
@@ -60,8 +61,9 @@ leap.on('deviceFrame', function(frame) {
             if (gesture.state == 'stop') {
               swipeDirection = "down";
               // send start recording command to smart mirror
-/*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
-*/            }
+              /*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
+               */
+            }
           }
         }
         break;
