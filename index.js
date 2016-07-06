@@ -1,14 +1,15 @@
 var leapjs = require('leapjs');
 var io = require('socket.io-client');
-const ip = '*****';
-const port = '*****';
+const ip = '***';
+const port = '***';
 var socket = io.connect(ip + ':' + port, {
   reconnect: true
 });
+var bool = true;
+
 // add a connect listener
 socket.on('connect', function(socket) {
   console.log('Connected successfully to smartmirror');
-
 });
 
 // intialize leap motion controller
@@ -23,10 +24,17 @@ leap.on('deviceFrame', function(frame) {
   for (var i = 0; i < frame.gestures.length; i++) {
     var gesture = frame.gestures[i];
     switch (gesture.type) {
-      case 'circle':
+      case 'keyTap':
         // gesture for play module
         if (gesture.state == 'stop') {
-          socket.emit('smartmirror', 'tagesschau');
+          if (bool == true) {
+            console.log('tap');
+            socket.emit('smartmirror', 'tagesschau');
+            bool = false;
+            setTimeout(function() {
+              bool = true;
+            }, 2000);
+          }
         }
         break;
       case 'swipe':
@@ -36,17 +44,27 @@ leap.on('deviceFrame', function(frame) {
         if (isHorizontal) {
           if (gesture.direction[0] > 0) {
             if (gesture.state == 'stop') {
-              swipeDirection = "right";
-              console.log("swipe right");
-              // send start recording command to smart mirror
-              socket.emit('smartmirror', 'swipe ' + swipeDirection);
+              if (bool == true) {
+                swipeDirection = "right";
+                console.log('right');
+                socket.emit('smartmirror', 'record');
+                bool = false;
+                setTimeout(function() {
+                  bool = true;
+                }, 2000);
+              }
             }
           } else {
             if (gesture.state == 'stop') {
-              swipeDirection = "left";
-              // send start recording command to smart mirror
-              /*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
-               */
+              if (bool == true) {
+                swipeDirection = "left";
+                console.log('left');
+                /*                socket.emit('smartmirror', '');
+                                bool = false;
+                                setTimeout(function() {
+                                  bool = true;
+                                }, 2000);*/
+              }
             }
           }
         } else {
@@ -54,15 +72,31 @@ leap.on('deviceFrame', function(frame) {
           if (gesture.direction[1] > 0) {
             // gesture for recording
             if (gesture.state == 'stop') {
-              swipeDirection = "up";
-              socket.emit('smartmirror', 'record');
+              if (bool == true) {
+                console.log("right");
+                swipeDirection = "up";
+                /*
+                                socket.emit('smartmirror', '');
+                                console.log('get swipe up gesture');
+                                bool = false;
+                                setTimeout(function() {
+                                  bool = true;
+                                }, 2000);*/
+              }
             }
           } else {
             if (gesture.state == 'stop') {
+              console.log("down");
               swipeDirection = "down";
-              // send start recording command to smart mirror
-              /*              socket.emit('smartmirror', 'swipe ' + swipeDirection);
-               */
+              /*              if (bool == true) {
+                              swipeDirection = "down";
+                              socket.emit('smartmirror', '');
+                              console.log('get swipe down gesture');
+                              bool = false;
+                              setTimeout(function() {
+                                bool = true;
+                              }, 2000);
+                            }*/
             }
           }
         }
