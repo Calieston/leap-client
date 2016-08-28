@@ -9,19 +9,19 @@ var app = express();
 var log4js = require('log4js');
 var config = require('./config');
 
-// log4js stuff
+// Log4js stuff
 log4js.configure({
     appenders: [
         {   type: 'console',
-        },
+    },
         {   type: 'file',
-            filename: "logs/leapclient.log",
+            filename: 'logs/leapclient.log',
             category: 'leapclient',
             maxLogSize: 20480,
-        }
-    ]
-});
-log4js.getLogger("leapclient").setLevel(config.loglevel);
+          },
+    ],
+  });
+log4js.getLogger('leapclient').setLevel(config.loglevel);
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));

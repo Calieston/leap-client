@@ -6,12 +6,12 @@ var leapCtrl = require('./leap');
 var config = require('./../config');
 const ip = config.ip;
 const port = config.port;
-var logger = log4js.getLogger("leapclient");
+var logger = log4js.getLogger('leapclient');
 var socket = io.connect(ip + ':' + port, {
-  reconnect: true
+  reconnect: true,
 });
 
-// add a connect listener
+// Add a connect listener
 socket.on('connect', function(socket) {
   logger.info('Connected successfully to smartmirror');
   logger.debug('Connected to IP: ' + ip + ' Port: ' + port);

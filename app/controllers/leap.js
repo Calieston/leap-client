@@ -5,17 +5,17 @@ var log4js = require('log4js');
 var leap;
 var socketCtrl = require('./socket');
 
-// flag variable to set timeout
+// Flag variable to set timeout
 var bool = true;
-var logger = log4js.getLogger("leapclient");
+var logger = log4js.getLogger('leapclient');
 
-// gesture constants
+// Gesture constants
 const gestureAction = 'gesture';
 const recordAction = 'record';
 const screenTap = 'screenTap';
 const keyTap = 'keyTap';
 
-// avoid multiple gesture detection with timeout
+// Avoid multiple gesture detection with timeout
 function timeout() {
   logger.debug('call timeout function');
   bool = false;
@@ -33,9 +33,9 @@ exports.initialize = (params) => {
       widget.gesture = item.gesture.gestureType;
       widgetList.push(widget);
     });
-    // intialize leap motion controller
+    // Intialize leap motion controller
     var leap = new leapjs.Controller({
-      enableGestures: true
+      enableGestures: true,
     });
 
     leap.on('error', function() {
@@ -50,19 +50,19 @@ exports.initialize = (params) => {
         var gesture = frame.gestures[i];
         switch (gesture.type) {
           case screenTap:
-            // gesture for play module
+            // Gesture for play module
             if (gesture.state == 'stop') {
               validateAndProcessGesture(widgetList, screenTap, gestureAction);
             }
             break;
           case keyTap:
-            // gesture for play module
+            // Gesture for play module
             if (gesture.state == 'stop') {
               validateAndProcessGesture(widgetList, keyTap, recordAction);
             }
             break;
           case 'circle':
-            // gesture for play module
+            // Gesture for play module
             if (gesture.state == 'stop') {
               var isClockwise = (gesture.normal[2] <= 0);
               if (isClockwise) {
@@ -75,7 +75,7 @@ exports.initialize = (params) => {
             }
             break;
           case 'swipe':
-            //Classify swipe as either horizontal or vertical
+            // Classify swipe as either horizontal or vertical
             var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
             if (isHorizontal) {
               if (gesture.direction[0] > 0) {
@@ -90,7 +90,7 @@ exports.initialize = (params) => {
                 }
               }
             } else {
-              //vertical
+              // Vertical
               if (gesture.direction[1] > 0) {
                 // SWIPE UP
                 if (gesture.state == 'stop') {
@@ -109,12 +109,12 @@ exports.initialize = (params) => {
     });
   }
 
-  // validate gesture and send socket message
+// Validate gesture and send socket message
 function validateAndProcessGesture(list, gestureType, action) {
   if (bool == true) {
     switch (action) {
       case 'gesture':
-        // iterate over all gesture widgets
+        // Iterate over all gesture widgets
         list.forEach(function(item) {
           if (item.gesture == gestureType) {
             logger.debug('Found gesture match: ' + gestureType);

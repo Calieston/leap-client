@@ -18,5 +18,10 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.8"
+  },
+    "jscsConfig": {
+    "preset": "node-style-guide",
+    "requireCurlyBraces": null,
+    "maximumLineLength": 120
   }
 }

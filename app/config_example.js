@@ -1,8 +1,8 @@
 module.exports = {
-  // example: http://localhost
+  // Example: http://localhost
   ip: '***',
-  // example_ 3000
+  // Example: 3000
   port: '***',
-  // examples: INFO, DEBUG, ERORR, ...
+  // Examples: INFO, DEBUG, ERROR, ...
   loglevel: 'DEBUG',
 };
