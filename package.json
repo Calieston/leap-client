@@ -1,7 +1,7 @@
 {
   "name": "leap",
-  "version": "0.0.1",
-  "description": "Smart Mirror leap client",
+  "version": "1.0.0",
+  "description": "A leap client for smart mirror project",
   "main": "index.js",
   "license": "MIT",
   "repository": {

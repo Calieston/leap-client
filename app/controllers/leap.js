@@ -33,10 +33,6 @@ exports.initialize = (params) => {
       widget.gesture = item.gesture.gestureType;
       widgetList.push(widget);
     });
-    // timeout for testing
-    setTimeout(function() {
-      validateAndProcessGesture(widgetList, 'swipe left', gestureAction);
-    }, 5000);
     // intialize leap motion controller
     var leap = new leapjs.Controller({
       enableGestures: true
@@ -64,6 +60,7 @@ exports.initialize = (params) => {
             if (gesture.state == 'stop') {
               validateAndProcessGesture(widgetList, keyTap, recordAction);
             }
+            break;
           case 'circle':
             // gesture for play module
             if (gesture.state == 'stop') {
@@ -111,7 +108,8 @@ exports.initialize = (params) => {
       }
     });
   }
-  // check if recognized gesture is available in user widgets gesture
+
+  // validate gesture and send socket message
 function validateAndProcessGesture(list, gestureType, action) {
   if (bool == true) {
     switch (action) {

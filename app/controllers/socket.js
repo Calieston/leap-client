@@ -3,9 +3,9 @@
 var log4js = require('log4js');
 var io = require('socket.io-client');
 var leapCtrl = require('./leap');
-const ip = 'http://localhost';
-//const ip = 'http://141.62.54.107';
-const port = '3000';
+var config = require('./../config');
+const ip = config.ip;
+const port = config.port;
 var logger = log4js.getLogger("leapclient");
 var socket = io.connect(ip + ':' + port, {
   reconnect: true
@@ -14,11 +14,8 @@ var socket = io.connect(ip + ':' + port, {
 // add a connect listener
 socket.on('connect', function(socket) {
   logger.info('Connected successfully to smartmirror');
-  logger.debug('IP: ' + ip + ' Port: ' + port);
+  logger.debug('Connected to IP: ' + ip + ' Port: ' + port);
 });
-socket.on('smartmirror-weather', function(data) {
-  logger.info('RECEIVED MESSAGE: ' + JSON.stringify(data, null, 4));
-})
 socket.on('gestures', function(data) {
   logger.info('received widget data from mirror');
   logger.debug('mirror data: ' + JSON.stringify(data, null, 4));
