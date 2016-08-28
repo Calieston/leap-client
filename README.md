@@ -5,6 +5,9 @@
 # Getting started
 * plugin a leap motion controller
 * install and start leap motion service
-* execute following commands in a shell or command line interface
+* clone leap client project
+* update config_example.js and rename it to config.js
+* start smart mirror server
+* execute following commands in leap client project directory (shell or cli)
     * `npm install`
     * `node index.js`
