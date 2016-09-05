@@ -28,12 +28,15 @@ exports.initialize = (params) => {
     var newList = [];
     var widgetList = [];
     widgets.forEach(function(item) {
-      var widget = {};
-      widget.name = item.module.name;
-      widget.gesture = item.gesture.gestureType;
-      widgetList.push(widget);
+      if (item.gesture != null) {
+        var widget = {};
+        widget.name = item.module.name;
+        widget.gesture = item.gesture.gestureType;
+        widgetList.push(widget);
+      }
     });
     // Intialize leap motion controller
+
     var leap = new leapjs.Controller({
       enableGestures: true,
     });
@@ -120,8 +123,8 @@ function validateAndProcessGesture(list, gestureType, action) {
             logger.debug('Found gesture match: ' + gestureType);
             let params = {};
             params.widget = item.name,
-              params.gesture = item.gesture,
-              params.action = action
+            params.gesture = item.gesture,
+            params.action = action
             socketCtrl.sendMessage(params);
             timeout();
           } else {
